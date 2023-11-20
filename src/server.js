@@ -21,6 +21,9 @@ const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
+app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send("Ready to run!");
+}));
 app.post("/submit", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { link } = req.body;
     try {

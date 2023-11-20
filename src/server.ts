@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { downloadAndTranscribe } from "./helpers";
 import bodyParser from 'body-parser';
+import {config} from "./config";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,10 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 
+
+app.get("/", async (req, res) => {
+  res.send("Ready to run!")
+})
 app.post("/submit", async (req, res) => {
   const { link } = req.body;
   try {
@@ -22,6 +27,6 @@ app.post("/submit", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(config.server.port, () => {
+  return console.log(`[server]: Server is running on ${config.server.port}`);
 });

@@ -21,7 +21,6 @@ dotenv_1.default.config();
 const openai = new openai_1.default({
     apiKey: process.env.OPENAI_API_KEY
 });
-// Function to download audio from YouTube
 function downloadAudio(link, outputFileName) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
@@ -32,7 +31,6 @@ function downloadAudio(link, outputFileName) {
         });
     });
 }
-// Function to transcribe audio
 function transcribeAudio(file) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

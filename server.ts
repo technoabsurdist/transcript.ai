@@ -1,5 +1,8 @@
 import express from "express" 
+import dotenv from "dotenv"
+import { downloadYoutubeLink, getTranscript } from "./helpers"
 
+dotenv.config()
 const app = express()
 
 app.use(express.json())

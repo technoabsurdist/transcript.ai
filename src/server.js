@@ -15,30 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const helpers_1 = require("./helpers");
+const body_parser_1 = __importDefault(require("body-parser"));
 dotenv_1.default.config();
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-// app.use(function(_req, res, next) {
-//   res.header("Access-Control-Allow-Origin", '*');
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//   res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//   next();
-// });
-// app.options('*', (_req, res) => {
-//   res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-//   res.set('Access-Control-Allow-Headers', 'Content-Type');
-//   res.status(204).send('');
-// });
-app.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send("Hello from testing!");
-}));
-app.post("/submit/:link", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const link = req.params.link;
-    const file = (0, helpers_1.downloadYoutubeLink)(link);
-    const transcript = (0, helpers_1.getTranscript)(file);
-    return res.send(transcript);
+app.use(body_parser_1.default.json());
+app.post("/submit", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { link } = req.body;
+    try {
+        const text = yield (0, helpers_1.downloadAndTranscribe)(link);
+        res.send({ "text": text });
+    }
+    catch (error) {
+        console.error('Error in processing the request:', error);
+        res.status(500).send({ error: 'An error occurred while processing your request.' });
+    }
 }));
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

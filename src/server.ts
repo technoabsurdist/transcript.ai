@@ -1,36 +1,26 @@
-import express from "express" 
-import dotenv from "dotenv"
-import { downloadYoutubeLink, getTranscript } from "./helpers"
+import express from "express"; 
+import dotenv from "dotenv";
+import { downloadAndTranscribe } from "./helpers";
+import bodyParser from 'body-parser';
 
-dotenv.config()
-const OPENAI_API_KEY=process.env.OPENAI_API_KEY
-const PORT = process.env.PORT || 3000
+dotenv.config();
+const PORT = process.env.PORT || 3000;
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-// app.use(function(_req, res, next) {
-//   res.header("Access-Control-Allow-Origin", '*');
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//   res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//   next();
-// });
-// app.options('*', (_req, res) => {
-//   res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-//   res.set('Access-Control-Allow-Headers', 'Content-Type');
-//   res.status(204).send('');
-// });
+app.use(express.json());
+app.use(bodyParser.json());
 
-app.get("/",async (_req, res) => {
-  res.send("Hello from testing!")
-})
-
-app.post("/submit/:link", async (req, res) => {
-  const link = req.params.link
-  const file = downloadYoutubeLink(link)
-  const transcript = getTranscript(file)
-  return res.send(transcript)
-})
+app.post("/submit", async (req, res) => {
+  const { link } = req.body;
+  try {
+    const text = await downloadAndTranscribe(link); 
+    res.send({ "text": text });
+  } catch (error) {
+    console.error('Error in processing the request:', error);
+    res.status(500).send({ error: 'An error occurred while processing your request.' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

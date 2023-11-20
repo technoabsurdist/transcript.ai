@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 import { downloadAndTranscribe } from "./helpers";
 import bodyParser from 'body-parser';
 import {config} from "./config";
+import cors from "cors"
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 app.use(bodyParser.json());
 

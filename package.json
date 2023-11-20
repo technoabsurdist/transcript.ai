@@ -4,7 +4,7 @@
   "description": "Transcript",
   "main": "server.ts",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "npm run build; nodemon src/server.js",
     "build": "tsc",
     "dev": "tsc && nodemon src/server.js"
   },

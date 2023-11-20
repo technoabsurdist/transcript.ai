@@ -3,28 +3,26 @@ import dotenv from "dotenv"
 import { downloadYoutubeLink, getTranscript } from "./helpers"
 
 dotenv.config()
+const OPENAI_API_KEY=process.env.OPENAI_API_KEY
+const PORT = process.env.PORT || 3000
+
 const app = express()
-const port = 3000
 
 app.use(express.json())
-app.use(function(_req, res, next) {
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-  next();
-});
-app.options('*', (_req, res) => {
-  res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type');
-  res.status(204).send('');
-});
+// app.use(function(_req, res, next) {
+//   res.header("Access-Control-Allow-Origin", '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//   res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+//   next();
+// });
+// app.options('*', (_req, res) => {
+//   res.set('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+//   res.set('Access-Control-Allow-Headers', 'Content-Type');
+//   res.status(204).send('');
+// });
 
 app.get("/",async (_req, res) => {
-  console.log("Hello server!") 
-})
-
-app.get("/testing", async (_req, res) => {
-  console.log("Testing server")  
+  res.send("Hello from testing!")
 })
 
 app.post("/submit/:link", async (req, res) => {
@@ -34,6 +32,6 @@ app.post("/submit/:link", async (req, res) => {
   return res.send(transcript)
 })
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

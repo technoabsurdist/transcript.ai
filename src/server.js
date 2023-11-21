@@ -30,7 +30,7 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 app.post("/submit", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { link } = req.body;
     try {
-        const text = yield (0, helpers_1.downloadAndTranscribe)(link);
+        const text = yield (0, helpers_1.transcribe)(link);
         const title = yield (0, helpers_1.getYoutubeVideoTitle)(link);
         res.send({ "text": text, "title": title });
     }

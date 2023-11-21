@@ -1,6 +1,6 @@
 import express from "express"; 
 import dotenv from "dotenv";
-import { downloadAndTranscribe, getYoutubeVideoTitle } from "./helpers";
+import { transcribe, getYoutubeVideoTitle } from "./helpers";
 import bodyParser from 'body-parser';
 import {config} from "./config";
 import cors from "cors"
@@ -21,7 +21,7 @@ app.get("/", async (req, res) => {
 app.post("/submit", async (req, res) => {
   const { link } = req.body;
   try {
-    const text = await downloadAndTranscribe(link); 
+    const text = await transcribe(link); 
     const title = await getYoutubeVideoTitle(link)
     res.send({ "text": text, "title": title });
   } catch (error) {

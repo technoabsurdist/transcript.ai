@@ -9,6 +9,28 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY 
 });
 
+export async function transcribe(link: string) {
+    const outputFileName = 'output.mp3';
+    try {
+        await downloadAudio(link, outputFileName);
+        return await transcribeAudio(outputFileName);
+    } catch (error) {
+        console.error('Error in download and transcription process:', error);
+        return null;
+    }
+}
+
+export async function getYoutubeVideoTitle(link: string) {
+    try {
+        const videoInfo = await ytdl.getInfo(link);
+        return videoInfo.videoDetails.title;
+    } catch (error) {
+        console.error('Error fetching YouTube video info:', error);
+        return null;
+    }
+}
+
+// helpers
 async function downloadAudio(link: string, outputFileName: string) {
     return new Promise((resolve, reject) => {
         ytdl(link, { filter: 'audioonly' })
@@ -27,28 +49,6 @@ async function transcribeAudio(file: string) {
         return transcription.text;
     } catch (error) {
         console.error('Error transcribing the file:', error);
-        return null;
-    }
-}
-
-// Main function to handle the download and transcription process
-export async function downloadAndTranscribe(link: string) {
-    const outputFileName = 'output.mp3';
-    try {
-        await downloadAudio(link, outputFileName);
-        return await transcribeAudio(outputFileName);
-    } catch (error) {
-        console.error('Error in download and transcription process:', error);
-        return null;
-    }
-}
-
-export async function getYoutubeVideoTitle(link: string) {
-    try {
-        const videoInfo = await ytdl.getInfo(link);
-        return videoInfo.videoDetails.title;
-    } catch (error) {
-        console.error('Error fetching YouTube video info:', error);
         return null;
     }
 }

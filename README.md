@@ -2,6 +2,9 @@
   <h3>Transcript.ai</h3>
 </div>
 
+## Live Demo
+[Youtube Transcript Live App](https://transcript-fe.vercel.app/)
+
 ## Overview
 This backend server is built using Node.js with Express and is designed to provide various functionalities including transcription and summary generation for audio and video files. It interacts with an external API (Sieve Data) for processing requests.
 

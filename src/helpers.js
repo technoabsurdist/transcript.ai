@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.downloadAndTranscribe = void 0;
+exports.getYoutubeVideoTitle = exports.downloadAndTranscribe = void 0;
 const fs_1 = __importDefault(require("fs"));
 const ytdl_core_1 = __importDefault(require("ytdl-core"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -61,3 +61,16 @@ function downloadAndTranscribe(link) {
     });
 }
 exports.downloadAndTranscribe = downloadAndTranscribe;
+function getYoutubeVideoTitle(link) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const videoInfo = yield ytdl_core_1.default.getInfo(link);
+            return videoInfo.videoDetails.title;
+        }
+        catch (error) {
+            console.error('Error fetching YouTube video info:', error);
+            return null;
+        }
+    });
+}
+exports.getYoutubeVideoTitle = getYoutubeVideoTitle;

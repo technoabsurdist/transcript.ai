@@ -16,9 +16,12 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const helpers_1 = require("./helpers");
 const body_parser_1 = __importDefault(require("body-parser"));
+const config_1 = require("./config");
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,13 +31,14 @@ app.post("/submit", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const { link } = req.body;
     try {
         const text = yield (0, helpers_1.downloadAndTranscribe)(link);
-        res.send({ "text": text });
+        const title = yield (0, helpers_1.getYoutubeVideoTitle)(link);
+        res.send({ "text": text, "title": title });
     }
     catch (error) {
         console.error('Error in processing the request:', error);
         res.status(500).send({ error: 'An error occurred while processing your request.' });
     }
 }));
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(config_1.config.server.port, () => {
+    return console.log(`[server]: Server is running on ${config_1.config.server.port}`);
 });

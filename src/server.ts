@@ -1,6 +1,6 @@
 import express from "express"; 
 import dotenv from "dotenv";
-import { downloadAndTranscribe } from "./helpers";
+import { downloadAndTranscribe, getYoutubeVideoTitle } from "./helpers";
 import bodyParser from 'body-parser';
 import {config} from "./config";
 import cors from "cors"
@@ -22,7 +22,8 @@ app.post("/submit", async (req, res) => {
   const { link } = req.body;
   try {
     const text = await downloadAndTranscribe(link); 
-    res.send({ "text": text });
+    const title = await getYoutubeVideoTitle(link)
+    res.send({ "text": text, "title": title });
   } catch (error) {
     console.error('Error in processing the request:', error);
     res.status(500).send({ error: 'An error occurred while processing your request.' });

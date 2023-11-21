@@ -8,8 +8,7 @@ export async function transcribe(link: string): Promise<TranscribeOutput> {
     try {
         await downloadAudio(link, outputFileName);
         const { jobId } = await processVideoSieve(outputFileName);
-        const processOutput = await fetchSieveData(jobId); 
-        return processOutput;
+        return await fetchSieveData(jobId); 
     } catch (error: any) {
         throw new Error(`Transcription error: ${error.message}`);
     }

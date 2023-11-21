@@ -20,7 +20,6 @@ export async function processVideoSieve(file: string): Promise<ProcessOutput> {
         const fileName = `output-${uuidv4()}.mp4`;
         console.log(">>> Uploading file to google cloud storage...")
         const fileUrl = await uploadToCloudStorage(fileContent, bucketName, fileName)
-        console.log("File URL (Google Cloud Bucket)", fileUrl)
 
         const response = await axios.post('https://mango.sievedata.com/v2/push', {
             function: "sieve/video_transcript_analyzer",
@@ -65,7 +64,7 @@ export async function fetchSieveData(jobId: string): Promise<any> {
             status = jobData.status;
 
             if (status === 'processing') {
-                console.log('Job still processing, waiting for completion...');
+                console.log('Job processing, waiting for completion...');
                 await new Promise(resolve => setTimeout(resolve, checkInterval));
             } else {
                 break; 

@@ -15,6 +15,7 @@ export async function downloadAudio(link: string, outputFileName: string): Promi
     });
 }
 
+// Deprecated: Whisper1 (No longer using whisper directly)
 export async function transcribeAudio(file: string): Promise<string> {
     const transcription = await openai.audio.transcriptions.create({
         file: fs.createReadStream(file),

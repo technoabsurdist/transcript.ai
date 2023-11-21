@@ -73,6 +73,32 @@ app.get('/check-status/:jobId', async (req, res) => {
   }
 });
 
+app.post('/summary', async (req, res) => {
+  const { link } = req.body
+  try {
+      const apiKey = SIEVE_API_KEY; 
+      const response = await axios.post('https://mango.sievedata.com/v2/push', {
+          function: "sieve/video_transcript_analyzer",
+          inputs: {
+              file: { url: link },
+              generate_chapters: true,
+              max_summary_length: 5,
+              max_title_length: 10,
+              num_tags: 5
+          }
+      }, {
+          headers: {
+              'Content-Type': 'application/json',
+              'X-API-Key': apiKey
+          }
+      });
+
+      res.json(response.data);
+  } catch (error) {
+      res.status(500).send('Error during summary generation');
+  }
+});
+
 app.listen(config.server.port, () => {
   return console.log(`[server]: Server is running on ${config.server.port}`);
 });

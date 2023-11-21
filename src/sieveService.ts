@@ -7,7 +7,10 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-const storage = new Storage({});
+// const storage = new Storage({});
+const storage = new Storage({
+    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+});
 
 export async function processVideoSieve(file: string): Promise<ProcessOutput> {
     try {

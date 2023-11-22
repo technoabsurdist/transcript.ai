@@ -24,6 +24,10 @@ API to create the full transcription alongside the specified features in downloa
 <br /> 
 <br />
 
+## To-Dos
+* **Reduce latency** / **Increase Processing Speed**. Videos take *way too long to transcript*. I'm not sure what's the biggest bottleneck 
+* **Modularize endpoints while maintaining speed** 
+* ... 
 
 ## Setup and Installation
 

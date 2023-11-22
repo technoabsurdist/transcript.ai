@@ -79,6 +79,7 @@ function fetchSieveData(jobId) {
                 }
             }
             console.log('Job completed. Fetching output data...');
+            console.log("jobData.outputs", jobData.outputs);
             return extractSieveOutputs(jobData.outputs);
         }
         catch (error) {
@@ -128,5 +129,6 @@ function extractSieveOutputs(outputs) {
         tags,
         chapters
     };
+    console.log("Title: ", title);
     return output;
 }

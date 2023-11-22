@@ -7,8 +7,11 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
+//// TESTING
 // const storage = new Storage({
 // });
+
+/// PROD
 const storage = new Storage({
     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
 });
@@ -72,8 +75,9 @@ export async function fetchSieveData(jobId: string): Promise<any> {
             }
         }
 
-        console.log('Job completed. Fetching output data...');
-        return extractSieveOutputs(jobData.outputs);
+        console.log('Job completed. Fetching output data...')
+        console.log("jobData.outputs", jobData.outputs)
+        return extractSieveOutputs(jobData.outputs)
 
     } catch (error) {
         console.error('Error fetching')

@@ -23,10 +23,11 @@ app.listen(PORT, () => {
 
 async function handleSubmit(req: any, res: any): Promise<void> {
   const { link } = req.body;
-  if (!link) throw new Error("No link provided")
+  if (!link) res.status(500).send("Link not provided!") 
   try {
-    const { text, summary, title, tags, chapters }= await transcribe(link); 
-    res.send({ text, summary, title, tags, chapters });
+    const result = await transcribe(link); 
+    console.log("result.text", result.text)
+    res.send(result);
   } catch (error) {
     console.error('Error in processing the request:', error);
     res.status(500).send({ error: 'An error occurred while processing your request. Please try again later.' });

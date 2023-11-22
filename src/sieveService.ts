@@ -8,8 +8,10 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const storage = new Storage({
-    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
 });
+// const storage = new Storage({
+//     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+// });
 
 export async function processVideoSieve(file: string): Promise<ProcessOutput> {
     try {
@@ -45,8 +47,8 @@ export async function processVideoSieve(file: string): Promise<ProcessOutput> {
 }
 
 export async function fetchSieveData(jobId: string): Promise<any> {
-    const checkInterval = 5000; // 5 seconds
-    const timeout = 60000; // 60 seconds for timeout
+    const checkInterval = 5000; 
+    const timeout = 60000; 
 
     try {
         let jobData;

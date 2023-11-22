@@ -23,6 +23,7 @@ app.listen(PORT, () => {
 
 async function handleSubmit(req: any, res: any): Promise<void> {
   const { link } = req.body;
+  if (!link) throw new Error("No link provided")
   try {
     const { text, summary, title, tags, chapters }= await transcribe(link); 
     res.send({ text, summary, title, tags, chapters });

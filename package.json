@@ -1,7 +1,7 @@
 {
   "name": "transcript-ai",
   "version": "1.0.0",
-  "description": "Transcript",
+  "description": "AI-powered Youtube Transcripts",
   "main": "server.ts",
   "scripts": {
     "start": "node src/server.js",

@@ -19,7 +19,12 @@ const storage_1 = require("@google-cloud/storage");
 const uuid_1 = require("uuid");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+// DEV
 const storage = new storage_1.Storage({});
+// PROD
+// const storage = new Storage({
+//     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+// });
 function processVideoSieve(file) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -28,7 +33,6 @@ function processVideoSieve(file) {
             const fileName = `output-${(0, uuid_1.v4)()}.mp4`;
             console.log(">>> Uploading file to google cloud storage...");
             const fileUrl = yield uploadToCloudStorage(fileContent, bucketName, fileName);
-            console.log("File URL (Google Cloud Bucket)", fileUrl);
             const response = yield axios_1.default.post('https://mango.sievedata.com/v2/push', {
                 function: "sieve/video_transcript_analyzer",
                 inputs: {
@@ -69,7 +73,7 @@ function fetchSieveData(jobId) {
                 jobData = response.data;
                 status = jobData.status;
                 if (status === 'processing') {
-                    console.log('Job still processing, waiting for completion...');
+                    console.log('Job processing, waiting for completion...');
                     yield new Promise(resolve => setTimeout(resolve, checkInterval));
                 }
                 else {
@@ -77,9 +81,7 @@ function fetchSieveData(jobId) {
                 }
             }
             console.log('Job completed. Fetching output data...');
-            const extractedData = extractSieveOutputs(jobData.outputs);
-            console.log(extractedData);
-            return extractedData;
+            return extractSieveOutputs(jobData.outputs);
         }
         catch (error) {
             console.error('Error fetching');
@@ -115,12 +117,19 @@ function uploadToCloudStorage(fileContent, bucketName, fileName) {
     });
 }
 function extractSieveOutputs(outputs) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-    const text = (_b = (_a = outputs[0]) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.text;
-    const summary = (_d = (_c = outputs[2]) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.summary;
-    const title = (_f = (_e = outputs[3]) === null || _e === void 0 ? void 0 : _e.data) === null || _f === void 0 ? void 0 : _f.title;
-    const tags = (_h = (_g = outputs[4]) === null || _g === void 0 ? void 0 : _g.data) === null || _h === void 0 ? void 0 : _h.tags;
-    const chapters = (_k = (_j = outputs[5]) === null || _j === void 0 ? void 0 : _j.data) === null || _k === void 0 ? void 0 : _k.chapters;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+    console.log("Outputs in extractSieveOutputs");
+    console.log("outputst[0]?.data", (_a = outputs[0]) === null || _a === void 0 ? void 0 : _a.data);
+    console.log("outputst[1]?.data", (_b = outputs[1]) === null || _b === void 0 ? void 0 : _b.data);
+    console.log("outputst[2]?.data", (_c = outputs[2]) === null || _c === void 0 ? void 0 : _c.data);
+    console.log("outputst[3]?.data", (_d = outputs[3]) === null || _d === void 0 ? void 0 : _d.data);
+    console.log("outputst[4]?.data", (_e = outputs[4]) === null || _e === void 0 ? void 0 : _e.data);
+    console.log("outputst[5]?.data", (_f = outputs[5]) === null || _f === void 0 ? void 0 : _f.data);
+    const text = (_h = (_g = outputs[0]) === null || _g === void 0 ? void 0 : _g.data) === null || _h === void 0 ? void 0 : _h.text;
+    const summary = (_k = (_j = outputs[2]) === null || _j === void 0 ? void 0 : _j.data) === null || _k === void 0 ? void 0 : _k.summary;
+    const title = (_m = (_l = outputs[3]) === null || _l === void 0 ? void 0 : _l.data) === null || _m === void 0 ? void 0 : _m.title;
+    const tags = (_p = (_o = outputs[4]) === null || _o === void 0 ? void 0 : _o.data) === null || _p === void 0 ? void 0 : _p.tags;
+    const chapters = (_r = (_q = outputs[5]) === null || _q === void 0 ? void 0 : _q.data) === null || _r === void 0 ? void 0 : _r.chapters;
     const output = {
         text,
         summary,
@@ -128,6 +137,5 @@ function extractSieveOutputs(outputs) {
         tags,
         chapters
     };
-    console.log(output);
     return output;
 }

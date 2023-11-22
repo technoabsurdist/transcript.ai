@@ -30,6 +30,7 @@ function downloadAudio(link, outputFileName) {
     });
 }
 exports.downloadAudio = downloadAudio;
+// Deprecated: Whisper1 (No longer using whisper directly)
 function transcribeAudio(file) {
     return __awaiter(this, void 0, void 0, function* () {
         const transcription = yield openai.audio.transcriptions.create({

@@ -7,7 +7,6 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-// const storage = new Storage({});
 const storage = new Storage({
     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
 });
@@ -111,11 +110,11 @@ async function uploadToCloudStorage(fileContent: any, bucketName: any, fileName:
 }
 
 function extractSieveOutputs(outputs: any) {
-    const text = outputs[0]?.data?.text;
-    const summary = outputs[2]?.data?.summary;
-    const title = outputs[3]?.data?.title;
-    const tags = outputs[4]?.data?.tags;
-    const chapters = outputs[5]?.data?.chapters;
+    const text = outputs[0]?.data?.text || "";
+    const summary = outputs[2]?.data?.summary || "";
+    const title = outputs[3]?.data?.title || "";
+    const tags = outputs[4]?.data?.tags || "";
+    const chapters = outputs[5]?.data?.chapters || "";
 
     const output = {
         text,
@@ -125,6 +124,5 @@ function extractSieveOutputs(outputs: any) {
         chapters 
     }
 
-    console.log(output)
     return output
 }

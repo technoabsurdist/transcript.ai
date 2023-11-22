@@ -18,8 +18,7 @@ function transcribe(link) {
         try {
             yield (0, utils_1.downloadAudio)(link, outputFileName);
             const { jobId } = yield (0, sieveService_1.processVideoSieve)(outputFileName);
-            const processOutput = yield (0, sieveService_1.fetchSieveData)(jobId);
-            return processOutput;
+            return yield (0, sieveService_1.fetchSieveData)(jobId);
         }
         catch (error) {
             throw new Error(`Transcription error: ${error.message}`);

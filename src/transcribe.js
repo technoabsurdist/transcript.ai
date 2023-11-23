@@ -16,8 +16,10 @@ function transcribe(link) {
     return __awaiter(this, void 0, void 0, function* () {
         const outputFileName = 'output.mp3';
         try {
+            console.log("Downloading audio...");
             yield (0, utils_1.downloadAudio)(link, outputFileName);
             const { jobId } = yield (0, sieveService_1.processVideoSieve)(outputFileName);
+            console.log("Submitted Job with ID: ", jobId);
             return yield (0, sieveService_1.fetchSieveData)(jobId);
         }
         catch (error) {

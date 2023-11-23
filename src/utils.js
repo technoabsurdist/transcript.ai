@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transcribeAudio = exports.downloadAudio = void 0;
+exports.downloadAudio = void 0;
 const fs_1 = __importDefault(require("fs"));
 const ytdl_core_1 = __importDefault(require("ytdl-core"));
 const openai_1 = __importDefault(require("openai"));
@@ -30,14 +30,3 @@ function downloadAudio(link, outputFileName) {
     });
 }
 exports.downloadAudio = downloadAudio;
-// Deprecated: Whisper1 (No longer using whisper directly)
-function transcribeAudio(file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const transcription = yield openai.audio.transcriptions.create({
-            file: fs_1.default.createReadStream(file),
-            model: "whisper-1"
-        });
-        return transcription.text;
-    });
-}
-exports.transcribeAudio = transcribeAudio;

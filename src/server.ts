@@ -17,13 +17,10 @@ app.get("/", async (req, res) => {
 
 app.post("/submit", handleSubmit);
 
-app.listen(PORT, () => {
-  console.log(`[server]: Server is running on ${PORT}`);
-});
-
 async function handleSubmit(req: any, res: any): Promise<void> {
   const { link } = req.body;
   if (!link) res.status(500).send("Link not provided!") 
+  console.log("Received link: ", link)
   try {
     const result = await transcribe(link); 
     console.log("result.text", result.text)
@@ -33,3 +30,7 @@ async function handleSubmit(req: any, res: any): Promise<void> {
     res.status(500).send({ error: 'An error occurred while processing your request. Please try again later.' });
   }
 }
+
+app.listen(PORT, () => {
+  console.log(`[server]: Server is running on ${PORT}`);
+});

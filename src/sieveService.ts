@@ -8,13 +8,13 @@ import dotenv from "dotenv"
 dotenv.config()
 
 //// TESTING
-// const storage = new Storage({
-// });
+const storage = new Storage({
+});
 
 /// PROD
-const storage = new Storage({
-    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
-});
+// const storage = new Storage({
+//     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+// });
 
 export async function processVideoSieve(file: string): Promise<ProcessOutput> {
     try {
@@ -51,13 +51,15 @@ export async function processVideoSieve(file: string): Promise<ProcessOutput> {
 
 export async function fetchSieveData(jobId: string): Promise<any> {
     const checkInterval = 5000; 
-    const timeout = 60000; 
 
     try {
         let jobData;
         let status = 'processing';
 
         while (status === 'processing') {
+
+            if (status !== "processing") break;
+
             const response = await axios.get(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
                 headers: {
                     'X-API-Key': process.env.SIEVE_API_KEY
@@ -67,12 +69,8 @@ export async function fetchSieveData(jobId: string): Promise<any> {
             jobData = response.data;
             status = jobData.status;
 
-            if (status === 'processing') {
-                console.log('Job processing, waiting for completion...');
-                await new Promise(resolve => setTimeout(resolve, checkInterval));
-            } else {
-                break; 
-            }
+            console.log('Job processing, waiting for completion...');
+            await new Promise(resolve => setTimeout(resolve, checkInterval));
         }
 
         console.log('Job completed. Fetching output data...')
@@ -91,7 +89,7 @@ async function uploadToCloudStorage(fileContent: any, bucketName: any, fileName:
         const file = bucket.file(fileName);
         const stream = file.createWriteStream({
             metadata: {
-                contentType: 'video/mp4',
+                contentType: 'video/mp4', // maybe change to mp3 ??? 
             },
         });
 

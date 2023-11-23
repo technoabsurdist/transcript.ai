@@ -25,17 +25,16 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("Transcription.ai Express Server Running!");
 }));
 app.post("/submit", handleSubmit);
-app.listen(PORT, () => {
-    console.log(`[server]: Server is running on ${PORT}`);
-});
 function handleSubmit(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { link } = req.body;
         if (!link)
-            throw new Error("No link provided");
+            res.status(500).send("Link not provided!");
+        console.log("Received link: ", link);
         try {
-            const { text, summary, title, tags, chapters } = yield (0, transcribe_1.transcribe)(link);
-            res.send({ text, summary, title, tags, chapters });
+            const result = yield (0, transcribe_1.transcribe)(link);
+            console.log("result.text", result.text);
+            res.send(result);
         }
         catch (error) {
             console.error('Error in processing the request:', error);
@@ -43,3 +42,6 @@ function handleSubmit(req, res) {
         }
     });
 }
+app.listen(PORT, () => {
+    console.log(`[server]: Server is running on ${PORT}`);
+});

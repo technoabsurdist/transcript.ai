@@ -19,7 +19,9 @@ const storage_1 = require("@google-cloud/storage");
 const uuid_1 = require("uuid");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+//// TESTING
 const storage = new storage_1.Storage({});
+/// PROD
 // const storage = new Storage({
 //     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
 // });
@@ -58,11 +60,12 @@ exports.processVideoSieve = processVideoSieve;
 function fetchSieveData(jobId) {
     return __awaiter(this, void 0, void 0, function* () {
         const checkInterval = 5000;
-        const timeout = 60000;
         try {
             let jobData;
             let status = 'processing';
             while (status === 'processing') {
+                if (status !== "processing")
+                    break;
                 const response = yield axios_1.default.get(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
                     headers: {
                         'X-API-Key': process.env.SIEVE_API_KEY
@@ -70,13 +73,8 @@ function fetchSieveData(jobId) {
                 });
                 jobData = response.data;
                 status = jobData.status;
-                if (status === 'processing') {
-                    console.log('Job processing, waiting for completion...');
-                    yield new Promise(resolve => setTimeout(resolve, checkInterval));
-                }
-                else {
-                    break;
-                }
+                console.log('Job processing, waiting for completion...');
+                yield new Promise(resolve => setTimeout(resolve, checkInterval));
             }
             console.log('Job completed. Fetching output data...');
             console.log("jobData.outputs", jobData.outputs);
@@ -95,7 +93,7 @@ function uploadToCloudStorage(fileContent, bucketName, fileName) {
             const file = bucket.file(fileName);
             const stream = file.createWriteStream({
                 metadata: {
-                    contentType: 'video/mp4',
+                    contentType: 'video/mp4', // maybe change to mp3 ??? 
                 },
             });
             stream.end(fileContent);
@@ -129,6 +127,5 @@ function extractSieveOutputs(outputs) {
         tags,
         chapters
     };
-    console.log("Title: ", title);
     return output;
 }

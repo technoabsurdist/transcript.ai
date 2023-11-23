@@ -8,13 +8,13 @@ import dotenv from "dotenv"
 dotenv.config()
 
 //// TESTING
-const storage = new Storage({
-});
+// const storage = new Storage({
+// });
 
 /// PROD
-// const storage = new Storage({
-//     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
-// });
+const storage = new Storage({
+    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+});
 
 export async function processVideoSieve(file: string): Promise<ProcessOutput> {
     try {
@@ -30,8 +30,8 @@ export async function processVideoSieve(file: string): Promise<ProcessOutput> {
             inputs: {
                 file: { url: fileUrl },
                 generate_chapters: true,
-                max_summary_length: 20,
-                max_title_length: 10,
+                max_summary_length: 10,
+                max_title_length: 8,
                 num_tags: 5
             }
         }, {

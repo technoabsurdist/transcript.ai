@@ -38,8 +38,8 @@ function processVideoSieve(file) {
                 inputs: {
                     file: { url: fileUrl },
                     generate_chapters: true,
-                    max_summary_length: 20,
-                    max_title_length: 10,
+                    max_summary_length: 10,
+                    max_title_length: 8,
                     num_tags: 5
                 }
             }, {

@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors"
 import { transcribe } from "./transcribe";
+import { fetchSieveData } from "./sieveService";
 
 dotenv.config();
 
@@ -16,20 +17,49 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/submit", handleSubmit);
-
-async function handleSubmit(req: any, res: any): Promise<void> {
+async function handleSubmit(req: any, res: any): Promise<any> {
   const { link } = req.body;
-  if (!link) res.status(500).send("Link not provided!") 
-  console.log("Received link: ", link)
+  if (!link) { res.status(500).send("Link not provided!"); return; }
+  console.log("Received link: ", link);
+  const jobId = await transcribe(link);
+  let status = 'processing';
+  let data;
+
+  while (status === 'processing') {
+    const response = await fetchSieveData(jobId);
+    status = response.status;
+    data = response.data;
+
+    if (status === 'processing') {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+
+  console.log("Output: ", data);
+  res.send(data);
+}
+
+
+app.get("/jobs/:jobId", handleFetchJob);
+async function handleFetchJob(req: any, res: any): Promise<void> {
   try {
-    const result = await transcribe(link); 
-    console.log("result.text", result.text)
-    res.send(result);
+      const jobId = req.params.jobId; 
+      if (!jobId) {
+          return res.status(400).json({ error: 'Missing jobId' });
+      }
+
+      const jobResult = await fetchSieveData(jobId); 
+
+      if (jobResult.data === "processing") {
+        return res.status(503).json({ error: "Processing, outputs not ready yet..."})
+      }
+      return res.status(200).json(jobResult);
   } catch (error) {
-    console.error('Error in processing the request:', error);
-    res.status(500).send({ error: 'An error occurred while processing your request. Please try again later.' });
+      console.error('Error fetching job:', error);
+      return res.status(500).json({ error: 'Internal server error' });
   }
 }
+
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running on ${PORT}`);

@@ -59,30 +59,18 @@ function processVideoSieve(file) {
 exports.processVideoSieve = processVideoSieve;
 function fetchSieveData(jobId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const checkInterval = 5000;
-        try {
-            let jobData;
-            let status = 'processing';
-            while (status === 'processing') {
-                if (status !== "processing")
-                    break;
-                const response = yield axios_1.default.get(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
-                    headers: {
-                        'X-API-Key': process.env.SIEVE_API_KEY
-                    }
-                });
-                jobData = response.data;
-                status = jobData.status;
-                console.log('Job processing, waiting for completion...');
-                yield new Promise(resolve => setTimeout(resolve, checkInterval));
+        let status = 'processing';
+        const response = yield axios_1.default.get(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
+            headers: {
+                'X-API-Key': process.env.SIEVE_API_KEY
             }
-            console.log('Job completed. Fetching output data...');
-            console.log("jobData.outputs", jobData.outputs);
-            return extractSieveOutputs(jobData.outputs);
-        }
-        catch (error) {
-            console.error('Error fetching');
-        }
+        });
+        status = response.data.status;
+        if (status === "processing")
+            return { status, data: "" };
+        console.log("Job Data Outputs", response.data.outputs);
+        const outputs = extractSieveOutputs(response.data.outputs);
+        return { status, data: outputs };
     });
 }
 exports.fetchSieveData = fetchSieveData;

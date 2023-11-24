@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const transcribe_1 = require("./transcribe");
+const sieveService_1 = require("./sieveService");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -28,17 +29,43 @@ app.post("/submit", handleSubmit);
 function handleSubmit(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { link } = req.body;
-        if (!link)
+        if (!link) {
             res.status(500).send("Link not provided!");
+            return;
+        }
         console.log("Received link: ", link);
+        const jobId = yield (0, transcribe_1.transcribe)(link);
+        let status = 'processing';
+        let data;
+        while (status === 'processing') {
+            const response = yield (0, sieveService_1.fetchSieveData)(jobId);
+            status = response.status;
+            data = response.data;
+            if (status === 'processing') {
+                yield new Promise(resolve => setTimeout(resolve, 2000));
+            }
+        }
+        console.log("Output: ", data);
+        res.send(data);
+    });
+}
+app.get("/jobs/:jobId", handleFetchJob);
+function handleFetchJob(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield (0, transcribe_1.transcribe)(link);
-            console.log("result.text", result.text);
-            res.send(result);
+            const jobId = req.params.jobId;
+            if (!jobId) {
+                return res.status(400).json({ error: 'Missing jobId' });
+            }
+            const jobResult = yield (0, sieveService_1.fetchSieveData)(jobId);
+            if (jobResult.data === "processing") {
+                return res.status(503).json({ error: "Processing, outputs not ready yet..." });
+            }
+            return res.status(200).json(jobResult);
         }
         catch (error) {
-            console.error('Error in processing the request:', error);
-            res.status(500).send({ error: 'An error occurred while processing your request. Please try again later.' });
+            console.error('Error fetching job:', error);
+            return res.status(500).json({ error: 'Internal server error' });
         }
     });
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import fs from 'fs';
-import { ProcessOutput } from './interfaces';
+import { ProcessOutput, TranscribeOutput } from './interfaces';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from "dotenv"
@@ -50,36 +50,18 @@ export async function processVideoSieve(file: string): Promise<ProcessOutput> {
 }
 
 export async function fetchSieveData(jobId: string): Promise<any> {
-    const checkInterval = 5000; 
+    let status = 'processing';
 
-    try {
-        let jobData;
-        let status = 'processing';
-
-        while (status === 'processing') {
-
-            if (status !== "processing") break;
-
-            const response = await axios.get(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
-                headers: {
-                    'X-API-Key': process.env.SIEVE_API_KEY
-                }
-            });
-
-            jobData = response.data;
-            status = jobData.status;
-
-            console.log('Job processing, waiting for completion...');
-            await new Promise(resolve => setTimeout(resolve, checkInterval));
+    const response = await axios.get(`https://mango.sievedata.com/v2/jobs/${jobId}`, {
+        headers: {
+            'X-API-Key': process.env.SIEVE_API_KEY
         }
-
-        console.log('Job completed. Fetching output data...')
-        console.log("jobData.outputs", jobData.outputs)
-        return extractSieveOutputs(jobData.outputs)
-
-    } catch (error) {
-        console.error('Error fetching')
-    }
+    });
+    status = response.data.status
+    if (status === "processing") return { status, data: ""}
+    console.log("Job Data Outputs", response.data.outputs)
+    const outputs = extractSieveOutputs(response.data.outputs)
+    return { status, data: outputs }
 }
 
 

@@ -24,11 +24,6 @@ API to create the full transcription alongside the specified features in downloa
 <br /> 
 <br />
 
-## To-Dos
-* **Reduce latency** / **Increase Processing Speed**. Videos take *way too long to transcript*. I'm not sure what's the biggest bottleneck 
-* **Modularize endpoints while maintaining speed** 
-* ... 
-
 ## Setup and Installation
 
 **Prerequisites**
@@ -41,11 +36,27 @@ API to create the full transcription alongside the specified features in downloa
 **Installation**
 
 Clone the repository.
-Run npm install to install dependencies.
+Run `npm install` for dependencies.
 
 **Starting the Server**
 
-Run npm start to start the server.
+Run `npm start` to start the server.
+
+**For Local Development**
+In line 10-20 of `sieveService.js` 
+
+Uncomment: 
+```
+//// TESTING
+const storage = new Storage({});
+```
+Comment: 
+```
+PROD
+const storage = new Storage({
+    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+});
+```
 
 ## API Endpoint
 POST `/submit` - Submit a link for transcription and title retrieval. <br />
@@ -60,15 +71,8 @@ To interact with the server, send HTTP requests to the respective endpoints with
 
 The server provides basic error handling for failed requests or internal errors.
 
-## Dependencies
-express
-dotenv
-body-parser
-cors
-axios
-
 ## Contributing
 
-This project is *very early stages*, so contributions are very welcome! Please ensure to follow the project's code style and contribution guidelines.
+This project is * early stages*, so contributions are very welcome! Please ensure to follow the project's code style and contribution guidelines.
 
 Shoot me an email if you get stuck at any part andere.emi@gmail.com

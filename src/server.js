@@ -34,13 +34,17 @@ function handleSubmit(req, res) {
             return;
         }
         console.log("Received link: ", link);
+        console.log("Transcribing...");
         const jobId = yield (0, transcribe_1.transcribe)(link);
+        console.log("Transcribed!");
         let status = 'processing';
         let data;
         while (status === 'processing') {
             const response = yield (0, sieveService_1.fetchSieveData)(jobId);
+            console.log("Fetching Sieve Model Output...");
             status = response.status;
             data = response.data;
+            console.log("Current status: ", response.status);
             if (status === 'processing') {
                 yield new Promise(resolve => setTimeout(resolve, 2000));
             }

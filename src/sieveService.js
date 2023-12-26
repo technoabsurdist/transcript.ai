@@ -20,11 +20,12 @@ const uuid_1 = require("uuid");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 //// TESTING
-const storage = new storage_1.Storage({});
-/// PROD
 // const storage = new Storage({
-//     credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
 // });
+/// PROD
+const storage = new storage_1.Storage({
+    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
+});
 function processVideoSieve(file) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

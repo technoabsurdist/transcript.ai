@@ -71,6 +71,11 @@ To interact with the server, send HTTP requests to the respective endpoints with
 
 The server provides basic error handling for failed requests or internal errors.
 
+## Next Steps 
+1. I want to switch to Python. Sieve, the library used for transcription services, has a native Python SDK but not for Node.js. 
+Therefore transcription service is currently implemented with raw curl requests. The biggest downside of this is having to separate 
+submitting a job and retreiving that job, while the Python SDK offers a single function `.run()` which abstracts this into one. 
+
 ## Contributing
 
 This project is * early stages*, so contributions are very welcome! Please ensure to follow the project's code style and contribution guidelines.

@@ -12,8 +12,8 @@
   <h5>Powered by <a href="https://www.sievedata.com/">Sieve</a>
 </div>
 
-## Live Demo with Frontend
-[Youtube Transcript Live App](https://transcript-fe.vercel.app/)
+## Live Demo with Frontend --inactive
+[Youtube Transcript Live App](https://transcript-fe.vercel.app/) 
 
 ## Overview
 This is the backend service for Youtube Transcript AI. An application to develop detailed

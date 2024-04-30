@@ -7,7 +7,7 @@ import { jsPDF } from "jspdf";
 import Progress from './ProgressBar';
 
 // const TESTURL = "http://127.0.0.1:5000"
-const PRODURL = 'https://whispering-shelf-58079-add57e77c7ca.herokuapp.com/'
+const PRODURL = 'https://serene-dawn-71128-bd386f08e8c5.herokuapp.com/'
 const SUBMIT_URL = `${PRODURL}/submit`
 
 const LinkInput: React.FC = () => {
@@ -36,7 +36,7 @@ const LinkInput: React.FC = () => {
     }
 
     function addTitle(doc: jsPDF, title: string | undefined, margin: number) {
-        title ? doc.text(`${title.slice(0, 70) + "..."}`, 10, margin) : doc.text("Transcript", 10, margin)
+        title ? doc.text(`${title.slice(0, 100)}`, 10, margin) : doc.text("Transcript", 10, margin)
     }
  
     
@@ -80,8 +80,9 @@ const LinkInput: React.FC = () => {
         let currentY = margin + titleSize + 5;
     
         currentY = addContentSection(doc, doc.splitTextToSize(summary || "", 235), lineHeight, currentY, margin, 'Summary', false);
-        currentY += lineHeight; // Add extra space between sections
+        currentY += lineHeight;
         addContentSection(doc, doc.splitTextToSize(text, 180), lineHeight, currentY, margin, 'Transcription', true);
+        currentY += lineHeight;
     
         return doc.output("blob");
     }

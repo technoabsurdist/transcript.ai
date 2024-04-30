@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <Image src="/yb.png" height="100" width="200" alt="YouTube Logo" className={styles.youtubeLogo} />
+        <Image src="/yb.png" height="100" width="150" alt="YouTube Logo" className={styles.youtubeLogo} />
         <h1 className={styles.title}>
           <a className='tracking-wider' href="https://github.com/technoabsurdist/transcript.ai" target='_blank'>YouTube Transcript</a>
         </h1>

@@ -71,9 +71,9 @@ const LinkInput: React.FC = () => {
     
     function createPdf(text: string, title?: string, author?: string, summary?: string) {
         const doc = new jsPDF();
-        const titleSize = 16;
+        const titleSize = 14;
         const lineHeight = 8;
-        const margin = 12;
+        const margin = 8;
 
         if (title) addTitle(doc, title, margin);
     

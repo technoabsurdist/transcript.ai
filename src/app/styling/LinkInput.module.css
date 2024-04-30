@@ -5,8 +5,21 @@
     align-items: center; /* Center items vertically */
     gap: 10px; /* Spacing between elements */
     padding: 10px;
+    color: black; 
 }
 
+.formContainer {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    gap: 10px; /* Spacing between elements */
+    padding: 15px;
+    color: black; 
+    border: 2px solid #040000;
+    border-radius: 5px; /* Adjust border-radius */
+    font-size: small;
+    font-weight: 600;
+    /* font-family: 'Share Tech Mono'; */
+}
 .inputBar {
     flex-grow: 1; /* Allow the input bar to fill available space */
     padding: 10px;

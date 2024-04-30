@@ -16,6 +16,7 @@ const LinkInput: React.FC = () => {
     const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
+    const [format, setFormat] = useState<string>('pdf');
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -69,6 +70,24 @@ const LinkInput: React.FC = () => {
         }
         return yPosition;
     }
+
+    function createText(text: string, title?: string, author?: string, summary?: string) {
+        let content = '';
+        if (title) {
+            content += `${title}\n\n`;
+        }
+        if (author) {
+            content += `By ${author}\n\n`;
+        }
+        if (summary) {
+            content += `Summary:\n${summary}\n\n`;
+        }
+        content += `Transcription:\n${text}`;
+    
+        const textBlob = new Blob([content], { type: 'text/plain' });
+        return textBlob;
+    }
+    
     
     function createPdf(text: string, title?: string, author?: string, summary?: string) {
         const doc = new jsPDF();
@@ -107,11 +126,19 @@ const LinkInput: React.FC = () => {
         };
     
         axios.request(options).then(function (response) {
-            if (response.status === 200) { 
-                console.log("Creating PDF...");     
-                const pdfBlob = createPdf(response.data.text, response.data.title, response.data.author, response.data.summary);
-                const pdfUrl = URL.createObjectURL(pdfBlob);
-                setDownloadUrl(pdfUrl);
+            if (response.status === 200) {
+                if (format === 'text') {
+                    console.log("Creating text...");
+                    const textBlob = createText(response.data.text, response.data.title, response.data.author, response.data.summary);
+                    const textUrl = URL.createObjectURL(textBlob);
+                    setDownloadUrl(textUrl);
+
+                } else {
+                    console.log("Creating PDF...");     
+                    const pdfBlob = createPdf(response.data.text, response.data.title, response.data.author, response.data.summary);
+                    const pdfUrl = URL.createObjectURL(pdfBlob);
+                    setDownloadUrl(pdfUrl);
+                }
                 setProgress(100);
                 setIsLoading(false);
             }
@@ -141,6 +168,10 @@ const LinkInput: React.FC = () => {
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
                 /> 
+                <select className={styles.formContainer} onChange={(e) => setFormat(e.target.value)}>
+                    <option value="pdf">PDF</option>
+                    <option value="text">Text</option>
+                </select>
                 <button 
                     type="button" 
                     onClick={submitHelper} 
@@ -155,11 +186,12 @@ const LinkInput: React.FC = () => {
                             <Progress bgcolor={"#FF0000"} completed={progress} />
                         </div>
                    :
-                        (downloadUrl && <a onClick={handleDownloadUrl} href={downloadUrl} download="transcript.pdf" className={styles.downloadLink}>Download Transcript!</a>)
+                        (downloadUrl && <a onClick={handleDownloadUrl} href={downloadUrl} download={`transcript.${format}`} className={styles.downloadLink}>Download Transcript!</a>)
                     }
                 </div>
         </>
-   );
+    );
+    
 }
 
 export default LinkInput

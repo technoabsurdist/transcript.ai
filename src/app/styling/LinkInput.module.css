@@ -1,0 +1,154 @@
+.container {
+    display: flex;
+    flex-direction: row; /* Align items horizontally */
+    justify-content: flex-start; /* Align items to the start of the container */
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Spacing between elements */
+    padding: 10px;
+}
+
+.inputBar {
+    flex-grow: 1; /* Allow the input bar to fill available space */
+    padding: 10px;
+    border: 2px solid #040000;
+    border-radius: 5px; /* Adjust border-radius */
+    outline: none;
+    transition: border-color 0.3s;
+    font-size: 20px;
+    box-sizing: border-box;
+    width: 500px; 
+    font-family: 'VT323';
+}
+
+.submitButton {
+    padding: 10px;
+    border: 2px solid #040000;
+    border-radius: 5px; /* Adjust border-radius */
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    box-sizing: border-box;
+    justify-content: center;
+    font-family: 'VT323';
+}
+
+.submitButton:hover {
+    background-color: #333;
+}
+.warningText {
+    color: #d9534f; 
+    background-color: #f2dede; 
+    border: 1px solid #d9534f; 
+    border-radius: 5px; 
+    padding: 6px; 
+    margin-top: 10px; 
+    font-size: 18px; 
+    text-align: center; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    width: 80%; 
+    max-width: 400px; 
+    box-sizing: border-box; 
+    font-family: 'VT323';
+}
+
+
+.languageDropdown, .processingDropdown {
+    padding: 8px;
+    border: 2px solid #040000;
+    border-radius: 5px; 
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    transition: border-color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
+    margin-left: 5px;
+    margin-right: 5px; 
+    width: 170px; 
+}
+
+.languageDropdown:hover, .processingDropdown:hover {
+    border-color: #505050;
+    background-color: #f8f8f8;
+}
+
+.response {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+    text-align: left;
+    font-size: 16px;
+    width: 350px; 
+    word-break: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.downloadLink {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #545454; 
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'VT323';
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.downloadLink:hover {
+    background-color: #3a3a3a; 
+}
+
+.downloadLink:focus {
+    outline: none;
+}
+
+.progressBar { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    width: 300px; 
+
+}
+
+@media (max-width: 600px) {
+    .inputBar, .submitButton, .response, .downloadLink {
+        font-size: 16px; 
+        padding: 8px 10px; 
+        width: 200px; 
+    }
+
+    .warningText {
+        zoom: 0.5; 
+        width: 300px; 
+    }
+    .container {
+        flex-direction: column; 
+        gap: 5px;
+    }
+
+    .response, .downloadLink {
+        max-width: 100%; 
+    }
+}
+
+@media (max-width: 600px) {
+    .inputBar {
+        font-size: 16px;
+        padding: 8px;
+        margin-right: -2px;
+    }
+}
+

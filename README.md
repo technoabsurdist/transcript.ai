@@ -11,7 +11,7 @@
 </div>
 
 ## Live Demo with Frontend
-[Youtube Transcript Live App](https://transcript-fe.vercel.app/) 
+[Youtube Transcript Live App](https://transcript-ai-iota.vercel.app/)
 
 ## Overview
 This is the backend service for Youtube Transcript AI. An application to develop detailed

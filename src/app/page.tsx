@@ -14,9 +14,9 @@ export default function Home() {
       </Head>
 
       <main>
-        <Image src="/yb.png" height="150" width="170" alt="YouTube Logo" className={styles.youtubeLogo} />
+        <Image src="/yb.png" height="100" width="200" alt="YouTube Logo" className={styles.youtubeLogo} />
         <h1 className={styles.title}>
-          <a href="https://github.com/technoabsurdist/transcript.ai" target='_blank'>YouTube Transcript</a>
+          <a className='tracking-wider' href="https://github.com/technoabsurdist/transcript.ai" target='_blank'>YouTube Transcript</a>
         </h1>
 
         <p className={styles.description}>
@@ -24,7 +24,7 @@ export default function Home() {
         </p>
         <LinkInput /> 
       </main>
-        <footer style={{ fontFamily: 'VT323', fontSize: '25px', color: "black" }}>
+        <footer style={{ fontFamily: 'Share Tech Mono', fontSize: '22px', color: "black" }}>
           Powered by
           <a href="https://www.sievedata.com/" target='_blank'>
             <Image className='ml-2' src="/sieve.png" height="25" width="25" alt="Sieve Logo" /> 
@@ -71,7 +71,7 @@ export default function Home() {
           padding: 0.75rem;
           font-size: 1.1rem;
           font-family:
-            VT323,
+            Share Tech Mono,
             Menlo,
             Monaco,
             Lucida Console,

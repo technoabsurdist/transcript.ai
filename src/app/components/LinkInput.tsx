@@ -38,13 +38,9 @@ const LinkInput: React.FC = () => {
     function addTitle(doc: jsPDF, title: string | undefined, margin: number) {
         title ? doc.text(`${title.slice(0, 70) + "..."}`, 10, margin) : doc.text("Transcript", 10, margin)
     }
-
-    // function addAuthor(doc: jsPDF, author: string | undefined, margin: number) {
-    //     author ? doc.text(`${author}`, 8, margin) : ""
-    // }
  
     
-    function addContentSection(doc: jsPDF, contentLines: string[], lineHeight: number, yPosition: number, bottomMargin: number, sectionTitle: string) {
+    function addContentSection(doc: jsPDF, contentLines: string[], lineHeight: number, yPosition: number, bottomMargin: number, sectionTitle: string, titleSet: boolean) {
         let maxY = 297 - bottomMargin; 
     
         if (contentLines.length > 0) {
@@ -58,9 +54,10 @@ const LinkInput: React.FC = () => {
                 if (yPosition + lineHeight > maxY) {
                     doc.addPage();
                     yPosition = bottomMargin;
-                    if (sectionTitle) {
+                    if (sectionTitle && !titleSet) {
                         doc.setFontSize(14);
                         doc.text(sectionTitle, 10, yPosition);
+                        titleSet = true
                         yPosition += lineHeight;
                     }
                     doc.setFontSize(12);
@@ -78,16 +75,13 @@ const LinkInput: React.FC = () => {
         const lineHeight = 8;
         const margin = 12;
 
-        // Title and Author
         if (title) addTitle(doc, title, margin);
-        // if (author) addAuthor(doc, author, margin + titleSize);
     
         let currentY = margin + titleSize + 5;
     
-        // Summary and Transcription
-        currentY = addContentSection(doc, doc.splitTextToSize(summary || "", 180), lineHeight, currentY, margin, 'Summary');
+        currentY = addContentSection(doc, doc.splitTextToSize(summary || "", 235), lineHeight, currentY, margin, 'Summary', false);
         currentY += lineHeight; // Add extra space between sections
-        addContentSection(doc, doc.splitTextToSize(text, 180), lineHeight, currentY, margin, 'Transcription');
+        addContentSection(doc, doc.splitTextToSize(text, 180), lineHeight, currentY, margin, 'Transcription', true);
     
         return doc.output("blob");
     }

@@ -1,0 +1,142 @@
+.container {
+  min-height: 100vh;
+  padding: 0 1rem; /* Increased padding for better spacing */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1;
+}
+
+.title a {
+  color: #FF0000;
+  text-decoration: none;
+}
+
+.title {
+  margin: 0 0 1rem;
+  margin-bottom: 0rem; 
+  line-height: 1.15;
+  text-align: center;
+  margin-top: 3rem; 
+  font-family: 'VT323', monospace;
+  font-size: 4rem;
+  text-shadow: 2px 2px 2px rgba(92, 92, 92, 0.3), 
+               -2px -2px 2px rgba(256,256,256,0.5);
+}
+
+
+.description {
+  text-align: center;
+  font-family: 'VT323';
+  line-height: 1.3;
+  margin-bottom: 2rem; 
+  font-weight: 600;
+  text-shadow: 2px 2px 2px rgba(152, 152, 152, 0.3), 
+  -2px -2px 2px rgba(256,256,256,0.5);
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0 1rem; 
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+.card {
+  margin: 1rem;
+  flex-basis: 45%;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.logo {
+  height: 1em;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+#inputBar {
+  padding: 10px;
+  border: 2px solid #FF0000;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+#inputBar:focus {
+  border-color: #FF0000;
+}
+
+#submitButton {
+  padding: 10px 20px;
+  background-color: #FF0000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#submitButton:hover {
+  background-color: #FF0000;
+}
+
+
+
+#inputBar, #submitButton {
+  width: 100%; 
+  max-width: 300px; 
+  font-size: 14px; 
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2rem; 
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 450px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 0.8rem;
+  }
+}

@@ -1,10 +1,8 @@
 
-
-
 <div align="center">
   <br />
   <br />
-  <img src="yb.png" height="100" width="100">
+  <img src="./public/yb.png" height="100" width="100">
   <br />
   <br />
   <h3>Transcript.ai</h3>
@@ -42,21 +40,6 @@ Run `npm install` for dependencies.
 
 Run `npm start` to start the server.
 
-**For Local Development**
-In line 10-20 of `sieveService.js` 
-
-Uncomment: 
-```
-//// TESTING
-const storage = new Storage({});
-```
-Comment: 
-```
-PROD
-const storage = new Storage({
-    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "")
-});
-```
 
 ## API Endpoint
 POST `/submit` - Submit a link for transcription and title retrieval. <br />

@@ -12,7 +12,7 @@
   <h5>Powered by <a href="https://www.sievedata.com/">Sieve</a>
 </div>
 
-## Live Demo with Frontend --inactive
+## Live Demo with Frontend
 [Youtube Transcript Live App](https://transcript-fe.vercel.app/) 
 
 ## Overview

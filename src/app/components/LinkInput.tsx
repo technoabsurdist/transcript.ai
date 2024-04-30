@@ -8,6 +8,7 @@ import Progress from './ProgressBar';
 
 // const TESTURL = "http://127.0.0.1:5000"
 const PRODURL = 'https://serene-dawn-71128-bd386f08e8c5.herokuapp.com/'
+
 const SUBMIT_URL = `${PRODURL}/submit`
 
 const LinkInput: React.FC = () => {

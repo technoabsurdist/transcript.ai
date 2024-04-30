@@ -15,7 +15,7 @@
     border-radius: 5px; /* Adjust border-radius */
     outline: none;
     transition: border-color 0.3s;
-    font-size: 25px;
+    font-size: 20px;
     box-sizing: border-box;
     width: 500px; 
     font-family: 'Share Tech Mono';
@@ -29,7 +29,7 @@
     color: rgb(246, 245, 245);
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 25px;
+    font-size: 20px;
     box-sizing: border-box;
     justify-content: center;
     font-family: 'Share Tech Mono';

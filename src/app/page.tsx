@@ -24,7 +24,7 @@ export default function Home() {
         </p>
         <LinkInput /> 
       </main>
-        <footer style={{ fontFamily: 'VT323', fontSize: '25px' }}>
+        <footer style={{ fontFamily: 'VT323', fontSize: '25px', color: "black" }}>
           Powered by
           <a href="https://www.sievedata.com/" target='_blank'>
             <Image className='ml-2' src="/sieve.png" height="25" width="25" alt="Sieve Logo" /> 

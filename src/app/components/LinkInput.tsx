@@ -143,6 +143,10 @@ const LinkInput: React.FC = () => {
                 setIsLoading(false);
             }
         }).catch(function (error) {
+            alert("Error while processing Youtube Video. Please, try again.")
+            setProgress(0)
+            setIsLoading(false)
+            return;
             console.log(error);
         });
         

@@ -7,7 +7,6 @@
   <br />
   <h3>Transcript.ai</h3>
   <h4>Transcript Youtube links along with AI-generated title, summary, chapters, and tags.</h4>
-  <h5>Powered by <a href="https://www.sievedata.com/">Sieve</a>
 </div>
 
 ## Live Demo with Frontend
